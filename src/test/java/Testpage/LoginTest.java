@@ -16,7 +16,7 @@ public class LoginTest extends BasePage {
         super.setup();
     }
 
-    @AfterMethod
+   // @AfterMethod
     @Override
     public void teardown() {
         super.teardown();

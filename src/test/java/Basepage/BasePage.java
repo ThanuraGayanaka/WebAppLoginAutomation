@@ -13,8 +13,9 @@ public class BasePage {
     public void setup() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
+        driver.manage().window().maximize();
+
     }
 
    // @AfterMethod // Runs after each test
