@@ -2,27 +2,41 @@ package Testpage;
 
 import Basepage.BasePage;
 import Pages.Homepage;
+import Pages.Loginpage;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 public class HomepageTest extends BasePage {
-@BeforeMethod
+
+    private Homepage homepage;
+
+    @BeforeClass
     @Override
-    public void setup() {
+    public void setup() throws InterruptedException {
         super.setup();
+        Loginpage loginpage = new Loginpage(driver);
+       homepage  =loginpage.login("standard_user", "secret_sauce");
+    }
+
+    @Override
+    public void teardown() {
+
     }
 
     @Test
     public void validateTheHeader() {
-        // Instantiate the Homepage object
-        Homepage homepage = new Homepage(driver);
+       // Homepage homepage = new Homepage(driver);
 
-        // Get the header title text from the page
         String actualTitle = homepage.checkHeaderTitle();
 
-        // Assert that the actual title is equal to the expected title
         String expectedTitle = "Swag Labs";
         Assert.assertEquals(actualTitle, expectedTitle, "Header title does not match the expected value!");
     }
+
 }

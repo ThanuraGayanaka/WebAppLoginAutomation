@@ -25,6 +25,8 @@ public class Loginpage {
     private By usernameField = By.id("user-name");
     private By passwordField = By.id("password");
     private By loginButtonField = By.xpath("//input[@id='login-button']");
+    By errorLocator = By.xpath("/html/body/noscript");
+
 
     // Method to enter the username (Corrected spelling)
     public void enterUsername(String username) {
@@ -45,11 +47,30 @@ public class Loginpage {
     }
 
     // Reusable method to log in (Fixed spelling of method names)
-    public void login(String username, String password) throws InterruptedException {
+    public Homepage login(String username, String password) throws InterruptedException {
         enterUsername(username);
         enterPassword(password);
 
-        Thread.sleep(1000);
+
+
+
+
+
+
+       Thread.sleep(1000);
         clickLogin();
+
+        // ✅ Ensure Homepage loads before returning the instance
+        By homeHeader = By.className("app_logo");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(homeHeader));
+
+
+        return new Homepage(driver);
+
+    }
+
+    public void LoginLockedOutUser() {
+        WebElement errorElement = driver.findElement(errorLocator);
+
     }
 }

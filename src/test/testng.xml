@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SwagLabs Test Suite">
+    <test name="Complete Login and Homepage Test">
+        <classes>
+            <class name="Testpage.LoginTest"/>  <!-- Runs LoginTest first -->
+            <class name="Testpage.HomepageTest"/> <!-- Runs HomepageTest after login -->
+        </classes>
+    </test>
+</suite>
