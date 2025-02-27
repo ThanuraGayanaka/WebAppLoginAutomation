@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
+import java.io.FileNotFoundException;
 import java.time.Duration;
 
 public class HomepageTest extends BasePage {
@@ -18,7 +19,7 @@ public class HomepageTest extends BasePage {
 
     @BeforeClass
     @Override
-    public void setup() throws InterruptedException {
+    public void setup() throws InterruptedException, FileNotFoundException {
         super.setup();
         Loginpage loginpage = new Loginpage(driver);
        homepage  =loginpage.login("standard_user", "secret_sauce");

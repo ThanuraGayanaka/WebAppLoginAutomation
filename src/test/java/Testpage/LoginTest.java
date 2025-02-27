@@ -2,6 +2,7 @@ package Testpage;
 
 import Basepage.BasePage;
 import Pages.Loginpage;
+import jdk.jfr.Enabled;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -9,11 +10,13 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.FileNotFoundException;
+
 public class LoginTest extends BasePage {
 
     @BeforeMethod
     @Override
-    public void setup() throws InterruptedException {
+    public void setup() throws InterruptedException, FileNotFoundException {
         super.setup();
     }
 
@@ -23,7 +26,7 @@ public class LoginTest extends BasePage {
    }
 
     @Test(priority = 0)
-    public void ValidLogin () throws InterruptedException {
+    public void ValidLogin () throws InterruptedException, FileNotFoundException {
         Loginpage loginpage = new Loginpage(driver);  // driver will be inherited from BasePage
         loginpage.login("standard_user","secret_sauce");
 
@@ -50,18 +53,19 @@ public class LoginTest extends BasePage {
 
 
     @Test(priority = 3)
-    public void WithWrongPassword() throws InterruptedException {
+
+    public void WithWrongPassword() throws InterruptedException, FileNotFoundException {
         Loginpage loginpage = new Loginpage(driver);
         loginpage.login("test","dfwsdwsdw");
 
         String expectedUrl = "https://www.saucedemo.com/inventory.html";
-        Assert.assertNotEquals(driver.getCurrentUrl(), expectedUrl, "Epic sadface: Username and password do not match any user in this service\n");
+        Assert.assertEquals(driver.getCurrentUrl(), expectedUrl, "Epic sadface: Username and password do not match any user in this service\n");
 
 
     }
 
     @Test(priority = 4)
-    public void LoginWithLockedOutUser() throws InterruptedException {
+    public void LoginWithLockedOutUser() throws InterruptedException, FileNotFoundException {
         Loginpage loginpage = new Loginpage(driver);
         loginpage.login("locked_out_user", "secret_sauce");
 

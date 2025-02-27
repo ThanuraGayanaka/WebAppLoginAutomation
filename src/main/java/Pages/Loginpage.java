@@ -3,8 +3,12 @@ package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.time.Duration;
 
 public class Loginpage {
@@ -47,7 +51,7 @@ public class Loginpage {
     }
 
     // Reusable method to log in (Fixed spelling of method names)
-    public Homepage login(String username, String password) throws InterruptedException {
+    public Homepage login(String username, String password) throws InterruptedException, FileNotFoundException {
         enterUsername(username);
         enterPassword(password);
 
@@ -63,6 +67,10 @@ public class Loginpage {
         // ✅ Ensure Homepage loads before returning the instance
         By homeHeader = By.className("app_logo");
         wait.until(ExpectedConditions.visibilityOfElementLocated(homeHeader));
+
+        //FileInputStream fi = new FileInputStream("documnet");
+
+
 
 
         return new Homepage(driver);

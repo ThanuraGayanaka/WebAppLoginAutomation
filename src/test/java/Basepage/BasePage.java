@@ -9,13 +9,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import java.io.FileNotFoundException;
 import java.time.Duration;
 
 public abstract class BasePage {
     protected static WebDriver driver;
 
     @BeforeSuite
-    public void setup() throws InterruptedException {
+    public void setup() throws InterruptedException, FileNotFoundException {
         if (driver == null) {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
@@ -34,6 +35,13 @@ public abstract class BasePage {
 
 
     @AfterSuite
+    public void teardown(){
+
+        driver.quit();
+
+    }
+
+    /*
     public void teardown() {
         System.out.println("Executing teardown method...");
         if (driver != null) {
@@ -44,6 +52,8 @@ public abstract class BasePage {
             System.out.println("Driver is already null, skipping quit.");
         }
     }
+
+     */
 
 
 }
