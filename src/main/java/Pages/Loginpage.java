@@ -3,12 +3,9 @@ package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.time.Duration;
 
 public class Loginpage {
@@ -25,60 +22,50 @@ public class Loginpage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Explicit wait of 10 seconds
     }
 
-    // Locators (Fixed variable names to follow camelCase convention)
+    // Locators
     private By usernameField = By.id("user-name");
     private By passwordField = By.id("password");
     private By loginButtonField = By.xpath("//input[@id='login-button']");
-    By errorLocator = By.xpath("/html/body/noscript");
+    private By errorLocator = By.xpath("//h3[@data-test='error']");
+    private By homeHeader = By.className("app_logo");
 
-
-    // Method to enter the username (Corrected spelling)
+    // Method to enter username
     public void enterUsername(String username) {
         WebElement usernameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField));
         usernameElement.sendKeys(username);
     }
 
-    // Method to enter the password (Corrected spelling)
+    // Method to enter password
     public void enterPassword(String password) {
         WebElement passwordElement = wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField));
         passwordElement.sendKeys(password);
     }
 
-    // Method to click the login button
+    // Method to click login
     public void clickLogin() {
         WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(loginButtonField));
         loginButton.click();
     }
 
-    // Reusable method to log in (Fixed spelling of method names)
-    public Homepage login(String username, String password) throws InterruptedException, FileNotFoundException {
+    // Reusable login method
+    public Homepage login(String username, String password) {
         enterUsername(username);
         enterPassword(password);
-
-
-
-
-
-
-
-       Thread.sleep(1000);
         clickLogin();
 
-        // ✅ Ensure Homepage loads before returning the instance
-        By homeHeader = By.className("app_logo");
+        // Wait for homepage to load
         wait.until(ExpectedConditions.visibilityOfElementLocated(homeHeader));
 
-        //FileInputStream fi = new FileInputStream("documnet");
-
-
-
-
-        return new Homepage(driver);
-
+        return new Homepage(driver); // Return the homepage object after successful login
     }
 
-    public void LoginLockedOutUser() {
-        WebElement errorElement = driver.findElement(errorLocator);
-
+    // Method to check for login errors
+    public String getErrorMessage() {
+        try {
+            WebElement errorElement = driver.findElement(errorLocator);
+            return errorElement.getText().trim();
+        } catch (Exception e) {
+            return "";
+        }
     }
 }
